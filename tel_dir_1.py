@@ -1,5 +1,5 @@
-
-
+﻿
+currPos = 0
 #getOut = False
 # === функция чтения файла ===========================================
 def readFile(fName):
@@ -8,10 +8,10 @@ def readFile(fName):
         print()
         fileContent = list()
         for line in file.readlines():
-            fileContent.append((tuple(line.split('\n')[0].split(';'))))
-        for el in fileContent:
-            for i in range(0,len(el)):
-                print(el[i], ' ', end = '')
+            fileContent.append((list(line.split('\n')[0].split(';'))))
+        # for el in fileContent:
+        #     for i in range(0,len(el)):
+        #         print(el[i], ' ', end = '')
             print()
         #print('Поиграемся!')
         # for i in range(0,len(fileContent)):
@@ -19,7 +19,8 @@ def readFile(fName):
         #         print(fileContent[i][j], " ", end='')
         #     print()
         #print(fileContent)
-
+        #prAbonents(fileContent)
+    file.close()
     #input()
     return fileContent
 
@@ -33,6 +34,27 @@ def findAbon(findArg):
     print()
     # пока пусто
 
+#=== функция вывода содержимого файла (fileContent)
+def prAbonents(abList, currPos=0):
+    outStr = ''
+    for i in range(0,len(abList)):
+        
+        #print(f'Едем по i = {i}')
+        for j in range(0, len(abList[i])):
+            #print(f'abList[i][j] = {abList[i][j]}')
+            outStr += abList[i][j] + ' '
+            #print(f'outStr = {outStr}')
+        
+        if i != currPos:
+            outStr = '    ' + outStr
+            #print(outStr)
+        else:
+            outStr = '==> ' + outStr
+            #print('out: ', outStr)
+        print(outStr)
+        outStr = ''
+
+                
 # === функция поиска абонента ===========================================
 def mainMenu():
     getOut=False
@@ -42,17 +64,22 @@ def mainMenu():
         print()
         print('=========================================================')
         print('Выберите пункт меню, нажав соответствующую цифру и Enter.')
-        print('1. Открыть файл')
-        print('2. Добавить абонента')
-        print('3. Удалить абонента')
-        print('4. Найти абонента')
-        print('5. Редактировать запись')
+        print('1. Найти абонента')
+        print('2. Удалить абонента')
+        print('3. Добавить абонента')
+        print('4. Редактировать запись')
         print('Q/q. выйти из программы')
         print()
         choice = input('Ваш выбор: ')
         #print(f'choice = {choice}')
         if choice == '1':
             readFile('telephone_direct.txt')
+        
+        if choice == '4':
+            print('======================================================')
+            fCont = readFile('telephone_direct.txt')
+            print('======================================================')
+            #input()
             
         if choice == 'Q' or choice == 'q': 
             getOut=True
@@ -64,4 +91,6 @@ def main():
     mainMenu()
 
 #main() # старт программы -------------------------------------------------------------------
+fileContent = readFile('telephone_direct.txt')
+prAbonents(fileContent)
 mainMenu()
